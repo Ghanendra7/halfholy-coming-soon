@@ -37,6 +37,7 @@
       /* ========================================================
          LOGO ANIMATION CONTROLS
          ======================================================== */
+      --logo-fade-delay: 0.3s;         /* Delay before fade-in starts */
       --logo-fade-duration: 0.8s;      /* Subtle fade-in duration before animation starts */
       --anim-delay: 1.2s;              /* Delay before letters begin shrinking */
       --anim-duration: 2.6s;           /* Total duration of the shrink animation */
@@ -169,7 +170,7 @@
       transform: translate3d(var(--dx, 0px), 0, 0);
       will-change: transform, opacity;
       opacity: 0;
-      transition: opacity var(--logo-fade-duration) cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity var(--logo-fade-duration) cubic-bezier(0.16, 1, 0.3, 1) var(--logo-fade-delay);
     }
 
     .logo-letter.ready {
