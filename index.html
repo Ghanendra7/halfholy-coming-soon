@@ -4,22 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>HALF HOLY — Coming Soon</title>
-  <meta name="description" content="Halfholy. Coming Soon. New York.">
+  <meta name="description" content="Halfholy. New York.">
   <meta property="og:title" content="HALF HOLY — Coming Soon">
   <meta property="og:description" content="Halfholy. New York.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://halfholy.nyc">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="theme-color" content="#000000">
 
   <style>
-    @font-face {
-      font-family: 'Antique Legacy';
-      src: url('./assets/fonts/AntiqueLegacy-Light.otf') format('opentype');
-      font-weight: 300;
-      font-style: normal;
-      font-display: swap;
-    }
-
     @font-face {
       font-family: 'Fragment Mono';
       src: url('./assets/fonts/FragmentMono-Regular.ttf') format('truetype');
@@ -29,13 +21,8 @@
     }
 
     :root {
-      --font-serif: 'Antique Legacy', Didot, 'Times New Roman', serif;
-      --font-mono: 'Fragment Mono', 'SF Mono', Menlo, Consolas, monospace;
-      --bg-color: #080808;
-      --text-main: #FFFFFF;
-      --text-muted: rgba(255, 255, 255, 0.65);
-      --border-subtle: rgba(255, 255, 255, 0.2);
-      --border-active: rgba(255, 255, 255, 0.85);
+      --font-mono: 'Fragment Mono', monospace, -apple-system, BlinkMacSystemFont, sans-serif;
+      --color-white: #FFFFFF;
     }
 
     * {
@@ -51,46 +38,37 @@
       height: 100%;
       min-height: 100vh;
       min-height: 100dvh;
-      background-color: var(--bg-color);
-      color: var(--text-main);
+      background-color: #000000;
+      color: var(--color-white);
       font-family: var(--font-mono);
       overflow: hidden;
       position: relative;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    /* Video Background */
-    .video-container {
+    /* Fullscreen Ambient Video Background */
+    .video-viewport {
       position: fixed;
       inset: 0;
       width: 100%;
       height: 100%;
       z-index: 1;
       overflow: hidden;
-      background-color: #000;
+      background-color: #000000;
     }
 
-    .video-container video {
+    .video-viewport video {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       display: block;
-      filter: brightness(0.85) contrast(1.05);
-      transition: filter 0.6s ease;
-    }
-
-    /* Subtle Cinematic Vignette */
-    .video-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background: radial-gradient(circle at center, rgba(8, 8, 8, 0.15) 0%, rgba(8, 8, 8, 0.65) 100%),
-                  linear-gradient(to bottom, rgba(8, 8, 8, 0.5) 0%, transparent 25%, transparent 75%, rgba(8, 8, 8, 0.6) 100%);
       pointer-events: none;
     }
 
-    /* Page Layout Container */
-    .content-wrapper {
+    /* Minimalist Content Grid Overlay */
+    .overlay-container {
       position: relative;
       z-index: 10;
       width: 100%;
@@ -99,380 +77,136 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: clamp(1.25rem, 4vw, 3rem);
-    }
-
-    /* Header */
-    header {
-      display: flex;
       align-items: center;
-      justify-content: space-between;
-      width: 100%;
+      padding: clamp(16px, 2.4vh, 24px) 20px;
+      pointer-events: none;
     }
 
-    .brand-logo {
-      font-family: var(--font-serif);
-      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--text-main);
-      text-decoration: none;
-      font-weight: 300;
-      transition: opacity 0.3s ease;
-    }
-
-    .brand-logo:hover {
-      opacity: 0.75;
-    }
-
-    .header-meta {
+    /* Top Status Bar: New York | Time | Date */
+    .top-status {
       display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      font-size: clamp(0.7rem, 1vw, 0.78rem);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .sound-btn {
-      background: transparent;
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      font-family: var(--font-mono);
-      font-size: clamp(0.68rem, 0.9vw, 0.75rem);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0.4rem 0.85rem;
-      border-radius: 9999px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.25s ease;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .sound-btn:hover {
-      border-color: var(--border-active);
-      background-color: rgba(255, 255, 255, 0.12);
-    }
-
-    .sound-wave {
-      display: inline-flex;
-      align-items: flex-end;
-      gap: 2px;
-      height: 10px;
-    }
-
-    .sound-wave span {
-      display: block;
-      width: 2px;
-      height: 3px;
-      background-color: currentColor;
-      transition: height 0.2s ease;
-    }
-
-    .sound-wave.active span:nth-child(1) {
-      animation: pulse 0.7s infinite alternate ease-in-out;
-    }
-    .sound-wave.active span:nth-child(2) {
-      animation: pulse 0.9s infinite alternate 0.2s ease-in-out;
-    }
-    .sound-wave.active span:nth-child(3) {
-      animation: pulse 0.6s infinite alternate 0.4s ease-in-out;
-    }
-
-    @keyframes pulse {
-      0% { height: 2px; }
-      100% { height: 10px; }
-    }
-
-    /* Main Center Content */
-    main {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 2rem 1rem;
-      max-width: 640px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .kicker {
-      font-size: clamp(0.7rem, 1vw, 0.8rem);
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
-    }
-
-    .headline {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 5.5vw, 4.25rem);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 2rem;
-      color: var(--text-main);
-      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
-    }
-
-    /* Newsletter Form */
-    .signup-form {
-      width: 100%;
-      max-width: 380px;
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 0.5rem;
-      transition: border-color 0.3s ease;
-      position: relative;
-    }
-
-    .signup-form:focus-within {
-      border-color: var(--border-active);
-    }
-
-    .signup-input {
-      width: 100%;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: var(--text-main);
+      gap: clamp(20px, 2.2vw, 32px);
+      font-size: clamp(9px, 0.72vw, 10px);
+      line-height: 1;
+      letter-spacing: 0.08em;
+      color: var(--color-white);
       font-family: var(--font-mono);
-      font-size: clamp(0.75rem, 1vw, 0.82rem);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding-right: 1rem;
+      font-weight: 400;
+      text-rendering: optimizeLegibility;
+      opacity: 0.95;
+      white-space: nowrap;
     }
 
-    .signup-input::placeholder {
-      color: rgba(255, 255, 255, 0.45);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+    /* Center Stage: HALF HOLY Logo SVG */
+    .center-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
     }
 
-    .signup-submit {
-      background: transparent;
-      border: none;
-      color: var(--text-main);
+    .center-logo svg {
+      width: clamp(85px, 8vw, 115px);
+      height: auto;
+      display: block;
+      shape-rendering: geometricPrecision;
+    }
+
+    /* Bottom: Coming soon */
+    .bottom-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(9px, 0.72vw, 10px);
+      line-height: 1;
+      letter-spacing: 0.08em;
+      color: var(--color-white);
       font-family: var(--font-mono);
-      font-size: 0.85rem;
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-      letter-spacing: 0.1em;
-      opacity: 0.65;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    .signup-submit:hover {
-      opacity: 1;
-      transform: translateX(3px);
-    }
-
-    .form-message {
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      margin-top: 0.75rem;
-      text-transform: uppercase;
-      min-height: 1.2rem;
-      transition: opacity 0.3s ease;
-    }
-
-    .form-message.success {
-      color: #bbf7d0;
-    }
-
-    .form-message.error {
-      color: #fca5a5;
-    }
-
-    /* Footer */
-    footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      font-size: clamp(0.68rem, 0.9vw, 0.75rem);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    footer a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 0.25s ease;
-    }
-
-    footer a:hover {
-      color: var(--text-main);
-    }
-
-    .footer-left, .footer-center, .footer-right {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 640px) {
-      .header-meta .location-tag {
-        display: none;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-      }
-
-      .footer-left, .footer-center, .footer-right {
-        gap: 1rem;
-        justify-content: center;
-      }
+      font-weight: 400;
+      text-rendering: optimizeLegibility;
+      opacity: 0.95;
+      white-space: nowrap;
     }
   </style>
 </head>
 <body>
 
-  <!-- Fullscreen Ambient Background Video -->
-  <div class="video-container">
+  <!-- Ambient Looping Video (Strictly Muted, No Audio Controls) -->
+  <div class="video-viewport">
     <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="./assets/poster.jpg">
       <source src="./assets/coming_soon.mp4" type="video/mp4">
-      Your browser does not support HTML5 video.
     </video>
-    <div class="video-overlay"></div>
   </div>
 
-  <!-- Page Overlay Content -->
-  <div class="content-wrapper">
-    <!-- Top Header -->
-    <header>
-      <a href="/" class="brand-logo">HALF HOLY</a>
-
-      <div class="header-meta">
-        <span class="location-tag">NEW YORK</span>
-        <button id="sound-toggle" class="sound-btn" type="button" aria-label="Toggle Sound">
-          <div class="sound-wave" id="sound-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <span id="sound-label">SOUND</span>
-        </button>
-      </div>
+  <!-- Editorial Minimal Overlay -->
+  <div class="overlay-container">
+    <!-- Top Row: New York, Time, Date -->
+    <header class="top-status">
+      <span>New York</span>
+      <span id="nyc-time">09:39</span>
+      <span id="nyc-date">November 6, 2026</span>
     </header>
 
-    <!-- Center Stage: Coming Soon -->
-    <main>
-      <p class="kicker">COLLECTION 01</p>
-      <h1 class="headline">COMING SOON</h1>
-
-      <!-- Early Access Signup -->
-      <form id="signup-form" class="signup-form" autocomplete="off">
-        <input 
-          type="email" 
-          id="email-input" 
-          class="signup-input" 
-          placeholder="ENTER YOUR EMAIL FOR EARLY ACCESS" 
-          required
-          aria-label="Email Address"
-        >
-        <button type="submit" class="signup-submit" aria-label="Submit">
-          &rarr;
-        </button>
-      </form>
-      <div id="form-msg" class="form-message"></div>
+    <!-- Center Wordmark Logo -->
+    <main class="center-logo">
+      <svg width="85" height="8" viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="HALF HOLY">
+        <path d="M5.4175 6.74892V4.12052H2.21521V6.74892C2.21521 7.24247 2.22669 7.2769 2.3759 7.32281C2.49067 7.35725 2.72023 7.36872 3.05309 7.3802L3.34003 7.40316V7.82783H0V7.40316L0.286944 7.3802C0.642755 7.36872 0.883788 7.34577 0.998565 7.31133C1.12482 7.26542 1.12482 7.21951 1.12482 6.74892V1.25108C1.12482 0.757532 1.11334 0.723099 0.964132 0.677188C0.849355 0.642755 0.619799 0.631277 0.286944 0.619799L0 0.596843V0.172166H3.32855V0.596843L3.05309 0.619799C2.66284 0.631277 2.42181 0.654233 2.34146 0.688666C2.21521 0.734577 2.21521 0.780488 2.21521 1.25108V3.56958H5.4175V1.25108C5.4175 0.757532 5.40603 0.723099 5.25682 0.677188C5.14204 0.642755 4.91248 0.631277 4.57963 0.619799L4.30416 0.596843V0.172166H7.63271V0.596843L7.34577 0.619799C6.98996 0.631277 6.74893 0.654233 6.63415 0.688666C6.50789 0.734577 6.50789 0.780488 6.50789 1.25108V6.74892C6.50789 7.24247 6.51937 7.2769 6.66858 7.32281C6.78336 7.35725 7.01291 7.36872 7.34577 7.3802L7.63271 7.40316V7.82783H4.29268V7.40316L4.57963 7.3802C5.02726 7.36872 5.29125 7.32281 5.34864 7.26542C5.39455 7.21951 5.4175 7.04735 5.4175 6.74892Z" fill="white"/>
+        <path d="M13.8727 6.80631L13.3447 5.38307H10.613L10.4638 5.76184C10.3031 6.19799 10.2227 6.50789 10.2227 6.68006C10.2227 6.94405 10.3834 7.19656 10.613 7.2769C10.7278 7.32281 10.9344 7.35725 11.2213 7.39168V7.82783H8.50108V7.39168C8.84541 7.35725 9.09792 7.25395 9.27009 7.05882C9.44225 6.8637 9.63737 6.43902 9.87841 5.80775L12.0707 0.0344335H12.5412L15.0204 6.69154C15.1237 6.95552 15.1926 7.11621 15.2385 7.18508C15.2844 7.25395 15.3648 7.29986 15.4796 7.33429C15.5829 7.35725 15.778 7.3802 16.0649 7.39168V7.82783H12.9774V7.39168C13.7579 7.3802 13.9645 7.32281 13.9645 7.12769C13.9645 7.05882 13.9301 6.95552 13.8727 6.80631ZM10.7966 4.901H13.161L11.9788 1.67575L10.7966 4.901Z" fill="white"/>
+        <path d="M22.7257 4.94692L23.0815 4.98135L22.9897 7.82783H16.9409V7.40316L17.2279 7.3802C17.5837 7.36872 17.8247 7.34577 17.9395 7.31133C18.0657 7.26542 18.0657 7.21951 18.0657 6.74892V1.25108C18.0657 0.757532 18.0543 0.723099 17.905 0.677188C17.7903 0.642755 17.5607 0.631277 17.2279 0.619799L16.9409 0.596843V0.172166H20.3957V0.596843L20.0055 0.619799C19.6038 0.631277 19.3627 0.654233 19.2824 0.688666C19.1561 0.746055 19.1561 0.791966 19.1561 1.25108V6.77188C19.1561 7.05882 19.1791 7.23099 19.225 7.28838C19.2824 7.34577 19.4431 7.36872 19.7185 7.36872H20.4646C20.9237 7.36872 21.268 7.32281 21.4861 7.23099C21.7157 7.13917 21.9223 6.967 22.1174 6.70301C22.3584 6.35868 22.5535 5.77331 22.7257 4.94692Z" fill="white"/>
+        <path d="M24.2961 0.172166H30.2071L30.3219 2.86944L29.9661 2.90387C29.7939 2.05452 29.5644 1.46915 29.2545 1.15925C28.9561 0.837877 28.4855 0.677188 27.8427 0.677188H27.0393C26.5457 0.677188 26.5113 0.711622 26.5113 1.20517V3.64993C27.1311 3.66141 27.5558 3.55811 27.7853 3.36298C28.0149 3.16786 28.1641 2.76614 28.2215 2.1693H28.6117V5.67001H28.2215C28.1985 5.06169 28.0608 4.64849 27.8198 4.43042C27.5787 4.20086 27.1426 4.08608 26.5113 4.09756V6.74892C26.5113 7.24247 26.5228 7.2769 26.672 7.32281C26.8097 7.35725 27.0393 7.3802 27.3492 7.3802L27.7853 7.40316V7.82783H24.2961V7.40316L24.583 7.3802C24.9388 7.36872 25.1799 7.34577 25.2947 7.31133C25.4209 7.26542 25.4209 7.21951 25.4209 6.74892V1.25108C25.4209 0.757532 25.4094 0.723099 25.2602 0.677188C25.1454 0.642755 24.9159 0.631277 24.583 0.619799L24.2961 0.596843V0.172166Z" fill="white"/>
+        <path d="M43.245 6.74892V4.12052H40.0427V6.74892C40.0427 7.24247 40.0542 7.2769 40.2034 7.32281C40.3181 7.35725 40.5477 7.36872 40.8806 7.3802L41.1675 7.40316V7.82783H37.8275V7.40316L38.1144 7.3802C38.4702 7.36872 38.7113 7.34577 38.826 7.31133C38.9523 7.26542 38.9523 7.21951 38.9523 6.74892V1.25108C38.9523 0.757532 38.9408 0.723099 38.7916 0.677188C38.6768 0.642755 38.4473 0.631277 38.1144 0.619799L37.8275 0.596843V0.172166H41.156V0.596843L40.8806 0.619799C40.4903 0.631277 40.2493 0.654233 40.1689 0.688666C40.0427 0.734577 40.0427 0.780488 40.0427 1.25108V3.56958H43.245V1.25108C43.245 0.757532 43.2335 0.723099 43.0843 0.677188C42.9695 0.642755 42.7399 0.631277 42.4071 0.619799L42.1316 0.596843V0.172166H45.4602V0.596843L45.1732 0.619799C44.8174 0.631277 44.5764 0.654233 44.4616 0.688666C44.3354 0.734577 44.3354 0.780488 44.3354 1.25108V6.74892C44.3354 7.24247 44.3468 7.2769 44.496 7.32281C44.6108 7.35725 44.8404 7.36872 45.1732 7.3802L45.4602 7.40316V7.82783H42.1202V7.40316L42.4071 7.3802C42.8547 7.36872 43.1187 7.32281 43.1761 7.26542C43.222 7.21951 43.245 7.04735 43.245 6.74892Z" fill="white"/>
+        <path d="M55.3337 0C56.1716 0 56.9176 0.332855 57.5489 0.998565C58.3179 1.81349 58.7082 2.82353 58.7082 4.05165C58.7082 5.18795 58.3409 6.15208 57.6178 6.94405C56.9865 7.64419 56.2175 8 55.3337 8C54.5417 8 53.8416 7.70158 53.2218 7.11621C52.3724 6.31277 51.9478 5.29125 51.9478 4.04017C51.9478 2.91535 52.2806 1.9627 52.9348 1.18221C53.5891 0.390244 54.3925 0 55.3337 0ZM55.3222 0.459111C53.9334 0.459111 53.2447 1.60689 53.2447 3.90244C53.2447 6.33572 53.9449 7.55237 55.3337 7.55237C56.6766 7.55237 57.4112 6.33572 57.4112 4.13199C57.4112 1.68723 56.711 0.459111 55.3222 0.459111Z" fill="white"/>
+        <path d="M70.9828 4.94692L71.3386 4.98135L71.2467 7.82783H65.198V7.40316L65.4849 7.3802C65.8407 7.36872 66.0818 7.34577 66.1965 7.31133C66.3228 7.26542 66.3228 7.21951 66.3228 6.74892V1.25108C66.3228 0.757532 66.3113 0.723099 66.1621 0.677188C66.0473 0.642755 65.8178 0.631277 65.4849 0.619799L65.198 0.596843V0.172166H68.6528V0.596843L68.2625 0.619799C67.8608 0.631277 67.6198 0.654233 67.5394 0.688666C67.4132 0.746055 67.4132 0.791966 67.4132 1.25108V6.77188C67.4132 7.05882 67.4361 7.23099 67.482 7.28838C67.5394 7.34577 67.7001 7.36872 67.9756 7.36872H68.7216C69.1808 7.36872 69.5251 7.32281 69.7432 7.23099C69.9727 7.13917 70.1793 6.967 70.3744 6.70301C70.6155 6.35868 70.8106 5.77331 70.9828 4.94692Z" fill="white"/>
+        <path d="M82.5802 1.83644L81.1455 4.62554V6.74892C81.1455 7.24247 81.1569 7.2769 81.3062 7.32281C81.4095 7.34577 81.639 7.36872 81.9833 7.3802L82.3621 7.40316V7.82783H78.8614V7.40316L79.2172 7.3802C79.596 7.36872 79.837 7.34577 79.9288 7.31133C80.0551 7.25395 80.0551 7.20803 80.0551 6.74892V4.78623L77.9202 1.21664C77.748 0.929699 77.6218 0.76901 77.53 0.723099C77.4381 0.665711 77.2086 0.631277 76.8298 0.596843V0.172166H80.0436V0.596843H79.6074C79.1483 0.596843 79.0221 0.642755 79.0221 0.826399C79.0221 0.906743 79.0795 1.033 79.1828 1.20517L80.87 4.01722L82.0752 1.67575C82.1899 1.4462 82.2473 1.26255 82.2473 1.1363C82.2473 0.941177 82.1555 0.803443 81.9719 0.711622C81.8341 0.654233 81.5931 0.608322 81.2602 0.596843V0.172166H84.0149V0.596843C83.682 0.608322 83.4181 0.700143 83.2344 0.860832C83.0623 1.01004 82.8442 1.3429 82.5802 1.83644Z" fill="white"/>
+      </svg>
     </main>
 
-    <!-- Bottom Footer -->
-    <footer>
-      <div class="footer-left">
-        <span>&copy; 2026 HALF HOLY</span>
-      </div>
-
-      <div class="footer-center">
-        <a href="mailto:info@halfholy.nyc">INFO@HALFHOLY.NYC</a>
-      </div>
-
-      <div class="footer-right">
-        <a href="https://instagram.com" target="_blank" rel="noopener">INSTAGRAM</a>
-      </div>
+    <!-- Bottom Row: Coming soon -->
+    <footer class="bottom-status">
+      <span>Coming soon</span>
     </footer>
   </div>
 
   <script>
-    // Audio Toggle Handler
-    const video = document.getElementById('bg-video');
-    const soundToggle = document.getElementById('sound-toggle');
-    const soundLabel = document.getElementById('sound-label');
-    const soundIndicator = document.getElementById('sound-indicator');
-
-    soundToggle.addEventListener('click', () => {
-      if (video.muted) {
-        video.muted = false;
-        soundLabel.textContent = 'MUTE';
-        soundIndicator.classList.add('active');
-      } else {
-        video.muted = true;
-        soundLabel.textContent = 'SOUND';
-        soundIndicator.classList.remove('active');
-      }
-    });
-
-    // Handle Autoplay policy safety
-    document.addEventListener('DOMContentLoaded', () => {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Fallback if browser blocks unmuted or initial play
-          video.muted = true;
-          video.play().catch(() => {});
-        });
-      }
-    });
-
-    // Early Access Newsletter Handler
-    const form = document.getElementById('signup-form');
-    const emailInput = document.getElementById('email-input');
-    const msg = document.getElementById('form-msg');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = emailInput.value.trim();
-
-      if (!email || !email.includes('@')) {
-        msg.textContent = 'PLEASE ENTER A VALID EMAIL';
-        msg.className = 'form-message error';
-        return;
-      }
-
-      // Store locally in localStorage (can be extracted or hooked to a webhook/Klaviyo)
+    // Live NYC Time & Date Clock
+    function updateNYCTime() {
       try {
-        const stored = JSON.parse(localStorage.getItem('halfholy_waitlist') || '[]');
-        if (!stored.includes(email)) {
-          stored.push(email);
-          localStorage.setItem('halfholy_waitlist', JSON.stringify(stored));
-        }
+        const now = new Date();
+        const timeFmt = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'America/New_York',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        });
+        const dateFmt = new Intl.DateTimeFormat('en-US', {
+          timeZone: 'America/New_York',
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        });
+
+        const timeEl = document.getElementById('nyc-time');
+        const dateEl = document.getElementById('nyc-date');
+
+        if (timeEl) timeEl.textContent = timeFmt.format(now);
+        if (dateEl) dateEl.textContent = dateFmt.format(now);
       } catch (err) {}
+    }
 
-      // Confirmation feedback
-      msg.textContent = 'YOU HAVE BEEN ADDED TO EARLY ACCESS';
-      msg.className = 'form-message success';
-      emailInput.value = '';
-      emailInput.disabled = true;
+    updateNYCTime();
+    setInterval(updateNYCTime, 1000);
 
-      setTimeout(() => {
-        msg.style.opacity = '0';
-      }, 5000);
-    });
+    // Bulletproof video autoplay (strictly muted)
+    const video = document.getElementById('bg-video');
+    if (video) {
+      video.muted = true;
+      video.play().catch(() => {
+        document.addEventListener('click', () => video.play(), { once: true });
+        document.addEventListener('touchstart', () => video.play(), { once: true });
+      });
+    }
   </script>
 </body>
 </html>
