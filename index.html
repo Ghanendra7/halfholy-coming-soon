@@ -33,6 +33,20 @@
       --status-letter-spacing: 0.2em;  /* Figma: 20% */
       --top-items-gap: 30px;           /* Spacing between items */
       --logo-width: 85px;              /* Exact Figma SVG width */
+
+      /* ========================================================
+         LOGO ANIMATION CONTROLS (TWEAK HERE)
+         ======================================================== */
+      --anim-delay: 1.2s;              /* Pause before letters begin shrinking */
+      --anim-duration: 2.6s;           /* Total duration of the shrink animation */
+      
+      /* Dramatic cinematic slow-stop easing (Exponential / Quintic ease-out) */
+      --anim-ease: cubic-bezier(0.08, 0.82, 0.17, 1);
+      /* Alternative easing curves to test:
+         --anim-ease: cubic-bezier(0.19, 1, 0.22, 1);  <- Ultra-long drift to a stop
+         --anim-ease: cubic-bezier(0.05, 0.9, 0.1, 1);  <- Super fast start, ultra-slow finish
+         --anim-ease: cubic-bezier(0.16, 1, 0.3, 1);   <- Apple standard luxury curve
+      */
     }
 
     * {
@@ -158,7 +172,7 @@
     }
 
     .logo-letter.animate-shrink {
-      animation: shrinkLetterToLogo 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+      animation: shrinkLetterToLogo var(--anim-duration) var(--anim-ease) var(--anim-delay) forwards;
     }
 
     @keyframes shrinkLetterToLogo {
@@ -369,10 +383,10 @@
       });
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', setupLogoAnimation);
-    } else {
+    if (document.readyState === 'complete') {
       setupLogoAnimation();
+    } else {
+      window.addEventListener('load', setupLogoAnimation);
     }
 
     // Bulletproof video autoplay (strictly muted)
