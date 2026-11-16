@@ -37,8 +37,9 @@
       /* ========================================================
          LOGO ANIMATION CONTROLS
          ======================================================== */
-      --anim-delay: 1.2s;
-      --anim-duration: 2.6s;
+      --logo-fade-duration: 0.8s;      /* Subtle fade-in duration before animation starts */
+      --anim-delay: 1.2s;              /* Delay before letters begin shrinking */
+      --anim-duration: 2.6s;           /* Total duration of the shrink animation */
       --anim-ease: cubic-bezier(.39, .06, .18, .99);
 
       /* ========================================================
@@ -150,9 +151,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      pointer-events: auto;
       width: 100%;
-      cursor: pointer;
     }
 
     .logo-stage {
@@ -168,9 +167,9 @@
       width: 100%;
       height: 100%;
       transform: translate3d(var(--dx, 0px), 0, 0);
-      will-change: transform;
+      will-change: transform, opacity;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity var(--logo-fade-duration) cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .logo-letter.ready {
@@ -238,7 +237,7 @@
     </header>
 
     <!-- Center Wordmark Logo -->
-    <main class="center-logo" id="logo-trigger" title="Click to replay animation" aria-label="HALF HOLY">
+    <main class="center-logo" aria-label="HALF HOLY">
       <div class="logo-stage" id="logo-stage">
         <!-- Letter 0: H -->
         <div class="logo-letter" data-index="0" data-char="H">
@@ -346,7 +345,6 @@
     function setupLogoAnimation() {
       const stage = document.getElementById('logo-stage');
       const letters = document.querySelectorAll('.logo-letter');
-      const trigger = document.getElementById('logo-trigger');
       if (!stage || !letters.length) return;
 
       // Authentic coordinates & widths of each letter in the 85x8 SVG
@@ -365,36 +363,24 @@
         const spreadStep = spreadSpan / 7;
 
         letters.forEach((letter, i) => {
-          // Remove previous animation classes for replay
-          letter.classList.remove('animate-shrink');
-
           const compactX = logoLeft + (pathX[i] * scale);
           const spreadX = P + (i * spreadStep);
           const dx = spreadX - compactX;
 
           letter.style.setProperty('--dx', `${dx.toFixed(2)}px`);
-          letter.classList.add('ready');
         });
 
-        // Trigger the graceful GPU-composited shrink animation
+        // Subtle initial fade-in, followed by shrink animation
         requestAnimationFrame(() => {
+          letters.forEach((letter) => letter.classList.add('ready'));
           requestAnimationFrame(() => {
-            letters.forEach((letter) => {
-              letter.classList.add('animate-shrink');
-            });
+            letters.forEach((letter) => letter.classList.add('animate-shrink'));
           });
         });
       }
 
       // Initial run
       computeAndPlay();
-
-      // Click center logo to replay the animation anytime
-      if (trigger) {
-        trigger.addEventListener('click', () => {
-          computeAndPlay();
-        });
-      }
 
       // Recalculate on window resize
       let resizeTimer;
