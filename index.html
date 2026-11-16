@@ -26,16 +26,13 @@
       --color-white: #FFFFFF;
 
       /* ========================================================
-         ADJUST FONT SIZES & SPACING HERE
+         EXACT FIGMA TYPOGRAPHY SPECS
          ======================================================== */
-      --status-font-size: 9px;
-      /* Font size of top and bottom text */
-      --status-letter-spacing: 0.2em;
-      /* Tracking / character spacing */
-      --top-items-gap: 28px;
-      /* Spacing between New York, Time, and Date */
-      --logo-width: 90px;
-      /* Width of the center HALF HOLY logo */
+      --status-font-size: 9px;         /* Figma: 9 */
+      --status-line-height: 1.15;      /* Figma: 115% */
+      --status-letter-spacing: 0.2em;  /* Figma: 20% */
+      --top-items-gap: 30px;           /* Spacing between items */
+      --logo-width: 85px;              /* Exact Figma SVG width */
     }
 
     * {
@@ -103,9 +100,10 @@
       justify-content: center;
       gap: var(--top-items-gap);
       font-size: var(--status-font-size);
-      line-height: 1;
+      line-height: var(--status-line-height);
       letter-spacing: var(--status-letter-spacing);
       text-transform: uppercase;
+      text-align: center;
       color: var(--color-white);
       font-family: var(--font-mono);
       font-weight: 400;
@@ -136,9 +134,10 @@
       align-items: center;
       justify-content: center;
       font-size: var(--status-font-size);
-      line-height: 1;
+      line-height: var(--status-line-height);
       letter-spacing: var(--status-letter-spacing);
       text-transform: uppercase;
+      text-align: center;
       color: var(--color-white);
       font-family: var(--font-mono);
       font-weight: 400;
