@@ -41,6 +41,11 @@
       --anim-duration: 2.6s;
       --anim-ease: cubic-bezier(.39, .06, .18, .99);
 
+      /* ========================================================
+         MOBILE VIDEO PADDING
+         ======================================================== */
+      --mobile-video-padding-y: 175px; /* Top & bottom padding for video on mobile */
+
     }
 
     * {
@@ -77,7 +82,7 @@
       font-variant-numeric: tabular-nums lining-nums;
     }
 
-    /* Fullscreen Ambient Video Background */
+    /* Ambient Video Background */
     .video-viewport {
       position: fixed;
       inset: 0;
@@ -86,6 +91,13 @@
       z-index: 1;
       overflow: hidden;
       background-color: #000000;
+    }
+
+    @media (max-width: 768px) {
+      .video-viewport {
+        inset: var(--mobile-video-padding-y) 0;
+        height: auto;
+      }
     }
 
     .video-viewport video {
