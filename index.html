@@ -41,6 +41,13 @@
       padding: 0;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+      font-synthesis: none;
     }
 
     html,
@@ -56,6 +63,10 @@
       position: relative;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: "kern" 1, "tnum" 1;
+      font-variant-numeric: tabular-nums lining-nums;
     }
 
     /* Fullscreen Ambient Video Background */
@@ -108,7 +119,9 @@
       font-family: var(--font-mono);
       font-weight: 400;
       text-rendering: optimizeLegibility;
-      opacity: 0.95;
+      font-kerning: normal;
+      font-feature-settings: "kern" 1, "tnum" 1;
+      font-variant-numeric: tabular-nums lining-nums;
       white-space: nowrap;
     }
 
@@ -142,7 +155,8 @@
       font-family: var(--font-mono);
       font-weight: 400;
       text-rendering: optimizeLegibility;
-      opacity: 0.95;
+      font-kerning: normal;
+      font-feature-settings: "kern" 1, "tnum" 1;
       white-space: nowrap;
     }
   </style>
