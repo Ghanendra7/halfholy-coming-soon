@@ -23,6 +23,14 @@
     :root {
       --font-mono: 'Fragment Mono', monospace, -apple-system, BlinkMacSystemFont, sans-serif;
       --color-white: #FFFFFF;
+
+      /* ========================================================
+         ADJUST FONT SIZES & SPACING HERE
+         ======================================================== */
+      --status-font-size: 10px;        /* Font size of top and bottom text */
+      --status-letter-spacing: 0.1em;  /* Tracking / character spacing */
+      --top-items-gap: 28px;           /* Spacing between New York, Time, and Date */
+      --logo-width: 90px;              /* Width of the center HALF HOLY logo */
     }
 
     * {
@@ -78,7 +86,7 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(16px, 2.4vh, 24px) 20px;
+      padding: 16px;
       pointer-events: none;
     }
 
@@ -87,10 +95,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: clamp(20px, 2.2vw, 32px);
-      font-size: clamp(9px, 0.72vw, 10px);
+      gap: var(--top-items-gap);
+      font-size: var(--status-font-size);
       line-height: 1;
-      letter-spacing: 0.08em;
+      letter-spacing: var(--status-letter-spacing);
+      text-transform: uppercase;
       color: var(--color-white);
       font-family: var(--font-mono);
       font-weight: 400;
@@ -108,7 +117,8 @@
     }
 
     .center-logo svg {
-      width: clamp(85px, 8vw, 115px);
+      width: var(--logo-width);
+      max-width: 80vw;
       height: auto;
       display: block;
       shape-rendering: geometricPrecision;
@@ -119,9 +129,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: clamp(9px, 0.72vw, 10px);
+      font-size: var(--status-font-size);
       line-height: 1;
-      letter-spacing: 0.08em;
+      letter-spacing: var(--status-letter-spacing);
+      text-transform: uppercase;
       color: var(--color-white);
       font-family: var(--font-mono);
       font-weight: 400;
