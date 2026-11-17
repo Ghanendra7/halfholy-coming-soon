@@ -25,30 +25,19 @@
       --font-mono: 'Fragment Mono', monospace, -apple-system, BlinkMacSystemFont, sans-serif;
       --color-white: #FFFFFF;
 
-      /* ========================================================
-         TYPOGRAPHY
-         ======================================================== */
       --status-font-size: 9px;
       --status-line-height: 1.15;
       --status-letter-spacing: 0.2em;
       --top-items-gap: 30px;
       --logo-width: 85px;
 
-      /* ========================================================
-         LOGO ANIMATION CONTROLS
-         ======================================================== */
       --logo-fade-delay: 0.1s;
       --logo-fade-duration: 0.4s;
       --anim-delay: 1.2s;
       --anim-duration: 4s;
       --anim-ease: cubic-bezier(0.83, 0, 0, 1);
-      /* Exact match for AE Speed Graph & Designer Video (83% out influence, 100% in influence) */
 
-      /* ========================================================
-         MOBILE VIDEO PADDING
-         ======================================================== */
       --mobile-video-padding-y: 15vh;
-      /* Top & bottom padding for video on mobile */
 
     }
 
@@ -86,7 +75,6 @@
       font-variant-numeric: tabular-nums lining-nums;
     }
 
-    /* Ambient Video Background */
     .video-viewport {
       position: fixed;
       inset: 0;
@@ -100,7 +88,6 @@
       justify-content: center;
     }
 
-    /* Desktop: 100% screen height, width auto, always centered */
     .video-viewport video {
       height: 100vh;
       height: 100dvh;
@@ -110,7 +97,6 @@
       pointer-events: none;
     }
 
-    /* Mobile: 175px top/bottom letterbox padding */
     @media (max-width: 768px) {
       .video-viewport {
         inset: var(--mobile-video-padding-y) 0;
@@ -126,7 +112,6 @@
       }
     }
 
-    /* Minimalist Content Grid Overlay */
     .overlay-container {
       position: relative;
       z-index: 10;
@@ -141,7 +126,6 @@
       pointer-events: none;
     }
 
-    /* Top Status Bar: New York | Time | Date */
     .top-status {
       display: flex;
       align-items: center;
@@ -162,7 +146,6 @@
       white-space: nowrap;
     }
 
-    /* Center Stage: HALF HOLY Animated Logo */
     .center-logo {
       display: flex;
       align-items: center;
@@ -213,7 +196,6 @@
       shape-rendering: geometricPrecision;
     }
 
-    /* Bottom: Coming soon */
     .bottom-status {
       display: flex;
       align-items: center;
@@ -236,26 +218,21 @@
 
 <body>
 
-  <!-- Ambient Looping Video (Strictly Muted, No Audio Controls) -->
   <div class="video-viewport">
     <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="./assets/poster.jpg">
       <source src="./assets/coming_soon.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- Editorial Minimal Overlay -->
   <div class="overlay-container">
-    <!-- Top Row: New York, Time, Date -->
     <header class="top-status">
       <span>New York</span>
       <span id="nyc-time">09:39</span>
       <span id="nyc-date">November 6, 2026</span>
     </header>
 
-    <!-- Center Wordmark Logo -->
     <main class="center-logo" aria-label="HALF HOLY">
       <div class="logo-stage" id="logo-stage">
-        <!-- Letter 0: H -->
         <div class="logo-letter" data-index="0" data-char="H">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -263,7 +240,6 @@
               fill="white" />
           </svg>
         </div>
-        <!-- Letter 1: A -->
         <div class="logo-letter" data-index="1" data-char="A">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -271,7 +247,6 @@
               fill="white" />
           </svg>
         </div>
-        <!-- Letter 2: L -->
         <div class="logo-letter" data-index="2" data-char="L">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -279,7 +254,6 @@
               fill="white" />
           </svg>
         </div>
-        <!-- Letter 3: F -->
         <div class="logo-letter" data-index="3" data-char="F">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -287,7 +261,6 @@
               fill="white" />
           </svg>
         </div>
-        <!-- Letter 4: H -->
         <div class="logo-letter" data-index="4" data-char="H">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -295,7 +268,6 @@
               fill="white" />
           </svg>
         </div>
-        <!-- Letter 5: O -->
         <div class="logo-letter" data-index="5" data-char="O">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -303,7 +275,6 @@
               fill="white" />
           </svg>
         </div>
-        <!-- Letter 6: L -->
         <div class="logo-letter" data-index="6" data-char="L">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -311,7 +282,6 @@
               fill="white" />
           </svg>
         </div>
-        <!-- Letter 7: Y -->
         <div class="logo-letter" data-index="7" data-char="Y">
           <svg viewBox="0 0 85 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -322,14 +292,13 @@
       </div>
     </main>
 
-    <!-- Bottom Row: Coming soon -->
     <footer class="bottom-status">
       <span>Coming soon</span>
     </footer>
   </div>
 
   <script>
-    // Live NYC Time & Date Clock
+
     function updateNYCTime() {
       try {
         const now = new Date();
@@ -357,16 +326,14 @@
     updateNYCTime();
     setInterval(updateNYCTime, 1000);
 
-    // Hardware-Accelerated Logo Shrink Animation
     function setupLogoAnimation() {
       const stage = document.getElementById('logo-stage');
       const letters = document.querySelectorAll('.logo-letter');
       if (!stage || !letters.length) return;
 
-      // Authentic coordinates & widths of each letter in the 85x8 SVG
       const pathX = [0.000, 8.501, 16.941, 24.296, 37.828, 51.948, 65.198, 76.830];
       const pathW = [7.633, 7.564, 6.141, 6.026, 7.633, 6.760, 6.141, 7.185];
-      const P = 16; // 16px screen padding matching Figma & overlay-container
+      const P = 16;
 
       function computeAndPlay() {
         const rect = stage.getBoundingClientRect();
@@ -386,7 +353,6 @@
           letter.style.setProperty('--dx', `${dx.toFixed(2)}px`);
         });
 
-        // Subtle initial fade-in, followed by shrink animation
         requestAnimationFrame(() => {
           letters.forEach((letter) => letter.classList.add('ready'));
           requestAnimationFrame(() => {
@@ -395,10 +361,8 @@
         });
       }
 
-      // Initial run
       computeAndPlay();
 
-      // Recalculate on window resize
       let resizeTimer;
       window.addEventListener('resize', () => {
         clearTimeout(resizeTimer);
@@ -414,7 +378,6 @@
       window.addEventListener('load', setupLogoAnimation);
     }
 
-    // Bulletproof video autoplay (strictly muted)
     const video = document.getElementById('bg-video');
     if (video) {
       video.muted = true;
