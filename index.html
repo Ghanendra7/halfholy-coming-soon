@@ -39,9 +39,12 @@
       --anim-delay: 1.2s;
       --anim-duration: 4s;
       --anim-ease: cubic-bezier(0.83, 0, 0, 1);
-      --connect-pause: 0.05s;
-      --connect-duration: 0.7s;
-      --connect-ease: ease-out;
+      --connect-pause: 0.2s;
+      --connect-duration: 0.55s;
+      --connect-ease: cubic-bezier(0.25, 1, 0.5, 1);
+      --connect-h-delay: 0s;
+      --connect-cascade-start: 0.12s;
+      --connect-stagger: 0.07s;
 
       --mobile-video-padding-y: 15vh;
 
@@ -209,7 +212,23 @@
     }
 
     .logo-letter.animate-connect {
-      animation: connectLettersToWord var(--connect-duration) var(--connect-ease) forwards;
+      animation: connectLettersToWord var(--connect-duration) var(--connect-ease) var(--letter-connect-delay, 0s) both;
+    }
+
+    .logo-letter[data-index="4"] {
+      --letter-connect-delay: var(--connect-h-delay);
+    }
+
+    .logo-letter[data-index="5"] {
+      --letter-connect-delay: var(--connect-cascade-start);
+    }
+
+    .logo-letter[data-index="6"] {
+      --letter-connect-delay: calc(var(--connect-cascade-start) + var(--connect-stagger));
+    }
+
+    .logo-letter[data-index="7"] {
+      --letter-connect-delay: calc(var(--connect-cascade-start) + (var(--connect-stagger) * 2));
     }
 
     @keyframes shrinkLetterToLogo {
