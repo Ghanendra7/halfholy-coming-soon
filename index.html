@@ -243,6 +243,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: var(--top-items-gap);
       font-size: var(--status-font-size);
       line-height: var(--status-line-height);
       letter-spacing: var(--status-letter-spacing);
@@ -255,6 +256,20 @@
       font-kerning: normal;
       font-feature-settings: "kern" 1, "tnum" 1;
       white-space: nowrap;
+    }
+
+    .bottom-status a,
+    .bottom-status a:visited,
+    .bottom-status a:hover,
+    .bottom-status a:active,
+    .bottom-status a:focus {
+      color: var(--color-white);
+      text-decoration: none;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
     }
   </style>
 </head>
@@ -337,6 +352,7 @@
 
     <footer class="bottom-status">
       <span>Coming soon</span>
+      <a href="https://www.instagram.com/half__holy?lqvp=N2tqdDhyOG1tNHVt" target="_blank" rel="noopener noreferrer">Instagram</a>
     </footer>
   </div>
 
