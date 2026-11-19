@@ -103,6 +103,21 @@
       pointer-events: none;
     }
 
+    .video-viewport video::-webkit-media-controls,
+    .video-viewport video::-webkit-media-controls-start-playback-button,
+    .video-viewport video::-webkit-media-controls-play-button,
+    .video-viewport video::-webkit-media-controls-overlay-play-button,
+    .video-viewport video::-webkit-media-controls-enclosure,
+    .video-viewport video::-webkit-media-controls-panel {
+      display: none !important;
+      -webkit-appearance: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
     @media (max-width: 768px) {
       .video-viewport {
         inset: var(--mobile-video-padding-y) 0;
@@ -239,7 +254,7 @@
 <body>
 
   <div class="video-viewport">
-    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto" poster="./assets/poster.jpg">
+    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline disablePictureInPicture disableremoteplayback x-webkit-airplay="deny" preload="auto" poster="./assets/poster.jpg">
       <source src="./assets/coming_soon.mp4" type="video/mp4">
     </video>
   </div>
@@ -441,11 +456,21 @@
 
     const video = document.getElementById('bg-video');
     if (video) {
+      video.defaultMuted = true;
       video.muted = true;
-      video.play().catch(() => {
-        document.addEventListener('click', () => video.play(), { once: true });
-        document.addEventListener('touchstart', () => video.play(), { once: true });
-      });
+      video.playsInline = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          const forcePlay = () => {
+            video.play();
+            document.removeEventListener('click', forcePlay);
+            document.removeEventListener('touchstart', forcePlay);
+          };
+          document.addEventListener('click', forcePlay, { once: true, passive: true });
+          document.addEventListener('touchstart', forcePlay, { once: true, passive: true });
+        });
+      }
     }
   </script>
 </body>
