@@ -39,6 +39,9 @@
       --anim-delay: 1.2s;
       --anim-duration: 4s;
       --anim-ease: cubic-bezier(0.83, 0, 0, 1);
+      --connect-pause: 0.05s;
+      --connect-duration: 0.7s;
+      --connect-ease: ease-out;
 
       --mobile-video-padding-y: 15vh;
 
@@ -168,7 +171,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
-      transform: translate3d(var(--dx, 0px), 0, 0);
+      transform: translate3d(var(--dx-spread, 0px), 0, 0);
       will-change: transform, opacity;
       opacity: 0;
       transition: opacity var(--logo-fade-duration) ease-in var(--logo-fade-delay);
@@ -182,13 +185,27 @@
       animation: shrinkLetterToLogo var(--anim-duration) var(--anim-ease) var(--anim-delay) forwards;
     }
 
+    .logo-letter.animate-connect {
+      animation: connectLettersToWord var(--connect-duration) var(--connect-ease) forwards;
+    }
+
     @keyframes shrinkLetterToLogo {
       0% {
-        transform: translate3d(var(--dx, 0px), 0, 0);
+        transform: translate3d(var(--dx-spread, 0px), 0, 0);
       }
 
       100% {
-        transform: translate3d(0, 0, 0);
+        transform: translate3d(var(--dx-step1, 0px), 0, 0);
+      }
+    }
+
+    @keyframes connectLettersToWord {
+      0% {
+        transform: translate3d(var(--dx-step1, 0px), 0, 0);
+      }
+
+      100% {
+        transform: translate3d(var(--dx-final, 0px), 0, 0);
       }
     }
 
@@ -338,7 +355,35 @@
       const pathW = [7.633, 7.564, 6.141, 6.026, 7.633, 6.760, 6.141, 7.185];
       const P = 16;
 
+      const finalGaps = [1.60, 1.60, 1.80, 2.50, 1.80, 1.80, 1.80];
+      const totalFinalW = pathW.reduce((sum, w) => sum + w, 0) + finalGaps.reduce((sum, g) => sum + g, 0);
+      const centerOffset = (85.0 - totalFinalW) / 2.0;
+
+      const finalX = [centerOffset];
+      for (let i = 0; i < 7; i++) {
+        finalX.push(finalX[i] + pathW[i] + finalGaps[i]);
+      }
+
+      const fEnd = finalX[3] + pathW[3];
+      const s1X = [
+        finalX[0],
+        finalX[1],
+        finalX[2],
+        finalX[3],
+        fEnd + 6.50,
+        fEnd + 6.50 + pathW[4] + 6.50,
+        fEnd + 6.50 + pathW[4] + 6.50 + pathW[5] + 6.50,
+        fEnd + 6.50 + pathW[4] + 6.50 + pathW[5] + 6.50 + pathW[6] + 5.50
+      ];
+
+      const s1_offsets = s1X.map((x, i) => x - pathX[i]);
+      const s2_offsets = finalX.map((x, i) => x - pathX[i]);
+
+      let connectTimer;
       function computeAndPlay() {
+        clearTimeout(connectTimer);
+        letters.forEach((letter) => letter.classList.remove('animate-connect', 'animate-shrink'));
+
         const rect = stage.getBoundingClientRect();
         const W = window.innerWidth;
         const scale = rect.width / 85;
@@ -351,15 +396,28 @@
         letters.forEach((letter, i) => {
           const compactX = logoLeft + (pathX[i] * scale);
           const spreadX = P + (i * spreadStep);
-          const dx = spreadX - compactX;
+          const dxSpread = spreadX - compactX;
+          const dxStep1 = s1_offsets[i] * scale;
+          const dxFinal = s2_offsets[i] * scale;
 
-          letter.style.setProperty('--dx', `${dx.toFixed(2)}px`);
+          letter.style.setProperty('--dx-spread', `${dxSpread.toFixed(2)}px`);
+          letter.style.setProperty('--dx-step1', `${dxStep1.toFixed(2)}px`);
+          letter.style.setProperty('--dx-final', `${dxFinal.toFixed(2)}px`);
         });
+
+        const rootStyle = getComputedStyle(document.documentElement);
+        const delayMs = (parseFloat(rootStyle.getPropertyValue('--anim-delay')) || 1.2) * 1000;
+        const durationMs = (parseFloat(rootStyle.getPropertyValue('--anim-duration')) || 4.0) * 1000;
+        const pauseMs = (parseFloat(rootStyle.getPropertyValue('--connect-pause')) || 0.4) * 1000;
+        const totalWait = delayMs + durationMs + pauseMs;
 
         requestAnimationFrame(() => {
           letters.forEach((letter) => letter.classList.add('ready'));
           requestAnimationFrame(() => {
             letters.forEach((letter) => letter.classList.add('animate-shrink'));
+            connectTimer = setTimeout(() => {
+              letters.forEach((letter) => letter.classList.add('animate-connect'));
+            }, totalWait);
           });
         });
       }
