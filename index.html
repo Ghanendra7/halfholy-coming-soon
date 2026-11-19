@@ -41,7 +41,7 @@
       --anim-ease: cubic-bezier(0.83, 0, 0, 1);
       --connect-pause: 0.2s;
       --connect-duration: 0.55s;
-      --connect-ease: cubic-bezier(0.25, 1, 0.5, 1);
+      --connect-ease: ease-out;
       --connect-h-delay: 0s;
       --connect-cascade-start: 0.12s;
       --connect-stagger: 0.07s;
@@ -296,7 +296,8 @@
 <body>
 
   <div class="video-viewport">
-    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline disablePictureInPicture disableremoteplayback x-webkit-airplay="deny" preload="auto">
+    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline disablePictureInPicture
+      disableremoteplayback x-webkit-airplay="deny" preload="auto">
       <source src="./assets/coming_soon.mp4" type="video/mp4">
     </video>
   </div>
@@ -371,7 +372,8 @@
 
     <footer class="bottom-status">
       <span>Coming soon</span>
-      <a href="https://www.instagram.com/half__holy?lqvp=N2tqdDhyOG1tNHVt" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://www.instagram.com/half__holy?lqvp=N2tqdDhyOG1tNHVt" target="_blank"
+        rel="noopener noreferrer">Instagram</a>
     </footer>
   </div>
 
