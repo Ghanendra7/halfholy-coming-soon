@@ -88,7 +88,8 @@
       height: 100%;
       z-index: 1;
       overflow: hidden;
-      background-color: #000000;
+      background: #000000 url('./assets/poster.jpg') no-repeat center center;
+      background-size: auto 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -103,6 +104,12 @@
       pointer-events: none;
     }
 
+    video::-webkit-media-controls,
+    video::-webkit-media-controls-start-playback-button,
+    video::-webkit-media-controls-play-button,
+    video::-webkit-media-controls-overlay-play-button,
+    video::-webkit-media-controls-enclosure,
+    video::-webkit-media-controls-panel,
     .video-viewport video::-webkit-media-controls,
     .video-viewport video::-webkit-media-controls-start-playback-button,
     .video-viewport video::-webkit-media-controls-play-button,
@@ -122,6 +129,7 @@
       .video-viewport {
         inset: var(--mobile-video-padding-y) 0;
         height: auto;
+        background-size: cover;
       }
 
       .video-viewport video {
@@ -254,7 +262,7 @@
 <body>
 
   <div class="video-viewport">
-    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline disablePictureInPicture disableremoteplayback x-webkit-airplay="deny" preload="auto" poster="./assets/poster.jpg">
+    <video id="bg-video" autoplay muted loop playsinline webkit-playsinline disablePictureInPicture disableremoteplayback x-webkit-airplay="deny" preload="auto">
       <source src="./assets/coming_soon.mp4" type="video/mp4">
     </video>
   </div>
